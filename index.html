@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.24.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.24.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; height: 80%}
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<style>
+#map {
+    position: fixed;
+    width:50%;
+}
+#features {
+    width: 50%;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    background-color: #fafafa;
+}
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    font-size: 13px;
+    height: 100%;
+}
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
+}
+.image {width: 508px;}
+</style>
+
+<div id='map'></div>
+<div id='features'>
+    <section id='start' class='active'>
+        <img src="https://api.mapbox.com/styles/v1/grafa/ciof7kbzs002mahnm9ju6qjn0/static/-14.396454,-7.928275,11.80,0.00,0.00/508x200?access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q" />
+        <p>Inspired by many of the outdoor styles that are using Mapbox maps, I decided I wanted a style that highlights the amenities useful one would want when getting outside. I'm not a big runner but trails I do get out and about and if I find a new trail and it's not in OpenStreetMap, you can bet it's making its way in map.</p>
+
+        <p>I started with a palette in mind that I made in <a href="http://www.colourlovers.com/palette/4333825/Runner">Colourlovers</a>:</p>
+        <img src="img/pallette.png" />
+        <p>Colourlovers is great because you can test patterns and see how the colors hold up against each other. Once the general color scheme was set, I created a style with the Outdoor theme as a template.</p>
+    </section>
+    <section id='labels'>
+        <h3>Labels</h3>
+        <p><img src="https://api.mapbox.com/styles/v1/grafa/ciof7kbzs002mahnm9ju6qjn0/static/7.418223,43.727788,16.48,0.00,0.00/508x200?access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q" /></p>
+        <p>Picking fonts is hard. I feel I got lucky just settling on <em>Mark SC Offc Pro Black Italic</em> because it called out the place names prominently and italicizing it made it feel, well, speedy.</p>
+        <img src="img/mark.png" />
+        <p>That and the hierarchies for font sizes were already set in the Outdoors template.</p>
+    </section>
+    <section id='bridge-tunnel'>
+        <h3>Bridges and Tunnels</h3>
+        <p>Bridges and tunnels changed in v6 of Mapbox Streets and were merged into the #road layer. The structure class field is now the key attribute for styling these different road types. 
+        <img src="https://api.mapbox.com/styles/v1/grafa/ciof7kbzs002mahnm9ju6qjn0/static/-74.001019,40.701444,13.49,61.53,0.00/508x600?access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q" />
+        </p>
+        <p>I didn't notice the change until looking at the odd loops in Monaco that seemingly crossed many contours.</p>
+    </section>
+    <section id='topo'>
+        <h3>Landcover and Topography</h3>
+        <p>The Mapbox Terrain source really brings the map to life with its complete package of landcover types, hillshade, and contours. Everything from sand to scrub, many of attributes are available for styling. Adding a little texture to the landuse class of sand gave was just enough to give it the look and feel.</p>
+        <img src="https://images.unsplash.com/photo-1473970010983-8609e6525adc?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=&h=&rect=&fit=crop&s=3d5774868851a018ee2042157b389c6e" class="image"/>
+    </section>
+    <section id='trails'>
+        <h3>Parks and Trails</h3>
+        <p>Walter writes to Oberstein and convinces him to meet in the smoking room of the Charing Cross Hotel where he promises additional plans for the submarine in exchange for money. The plan works and Holmes and Watson catch both criminals.</p>
+        <img src="https://images.unsplash.com/uploads/1413142095961484763cf/d141726c?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=&h=&rect=&fit=crop&s=f182d6289641123a3a9152c9c1e81a43" class="image"/>
+        <small id="citation">
+            Adapted from <a href='http://www.gutenberg.org/files/2346/2346-h/2346-h.htm'>Project Gutenberg</a>
+        </small>
+    </section>
+    <section id='golf'>
+        <h3>Golf Courses</h3>
+        <p>Walter writes to Oberstein and convinces him to meet in the smoking room of the Charing Cross Hotel where he promises additional plans for the submarine in exchange for money. The plan works and Holmes and Watson catch both criminals.</p>
+        <img src="https://images.unsplash.com/photo-1443706340763-4b60757a36ce?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=&h=&rect=&fit=crop&s=6a4267962b9f8cef96dcd28a14fd7b35" class="image"/>
+        <small id="citation">
+            Adapted from <a href='http://www.gutenberg.org/files/2346/2346-h/2346-h.htm'>Project Gutenberg</a>
+        </small>
+    </section>
+    <section id='city'>
+        <h3>Urban Areas</h3>
+        <p>Walter writes to Oberstein and convinces him to meet in the smoking room of the Charing Cross Hotel where he promises additional plans for the submarine in exchange for money. The plan works and Holmes and Watson catch both criminals.</p>
+        <img src="https://images.unsplash.com/photo-1459679749680-18eb1eb37418?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=&h=&rect=&fit=crop&s=00b4498ab8ba67e968d392cf5f90503f" class="image"/>
+        <small id="citation">
+            Adapted from <a href='http://www.gutenberg.org/files/2346/2346-h/2346-h.htm'>Project Gutenberg</a>
+        </small>
+    </section>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2lvZjU0NnRqMDB0cnVwbTM3MmZjeGxxZiJ9.HG76QROZVWnTf9jQ9ZKWDw';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/grafa/ciof7kbzs002mahnm9ju6qjn0/',
+    center: [7.341869496982696,43.72271342249323],
+    zoom: 11,
+    bearing: 0,
+    pitch: 0
+});
+
+var chapters = {
+    'start': {
+        center: [7.341869496982696,43.72271342249323],
+        zoom: 12,
+        bearing: 0,
+        speed: 0.3,
+        pitch: 0
+    },
+    'labels': {
+        center: [7.341869496982696,43.72271342249323],
+        zoom: 12,
+        bearing: 0,
+        speed: 0.3,
+        pitch: 0
+    },
+    'bridge-tunnel': {
+        bearing: 0,
+        center: [7.410377582329062,43.73278079217846],
+        zoom: 15,
+        speed: 0.3,
+        pitch: 0
+    },
+    'topo': {
+        duration: 6000,
+        center: [-43.1947558191211,-22.977012081349528],
+        bearing: -23,
+        zoom: 13,
+        speed: 0.9,
+        pitch: 0
+    },
+    'trails': {
+        bearing: -179.2,
+        center: [-123.21087336651058,49.2495570942057],
+        zoom: 12,
+        speed: 0.9,
+        pitch: 0
+    },
+    'golf': {
+        bearing: 45,
+        center: [-82.02199002116195,33.488148006522124],
+        zoom: 15,
+        pitch: 20,
+        speed: 0.9
+    },
+    'city': {
+        bearing: -142,
+        center: [4.902242045985503,52.37470215105509],
+        zoom: 15.79,
+        speed: 0.6,
+        pitch: 55
+    }
+};
+
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var chapterNames = Object.keys(chapters);
+    for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+        }
+    }
+};
+
+var activeChapterName = 'top';
+function setActiveChapter(chapterName) {
+    if (chapterName === activeChapterName) return;
+
+    map.flyTo(chapters[chapterName]);
+
+    document.getElementById(chapterName).setAttribute('class', 'active');
+    document.getElementById(activeChapterName).setAttribute('class', '');
+
+    activeChapterName = chapterName;
+}
+
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
+
+</script>
+
+</body>
+</html>
